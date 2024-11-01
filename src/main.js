@@ -6,7 +6,8 @@ import { router } from './router.js';
 import "bootstrap/dist/js/bootstrap.js";
 import pokemon from 'pokemontcgsdk';
 
-pokemon.configure({ apiKey: '7c1da767-856c-4eac-9b42-68ed220d3a78' });
+pokemon.configure({ apiKey: import.meta.env.VITE_CARD_API });
+s
 
 const app = createApp(App);
 
