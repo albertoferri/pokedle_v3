@@ -7,7 +7,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import pokemon from 'pokemontcgsdk';
 
 pokemon.configure({ apiKey: import.meta.env.VITE_CARD_API });
-s
+
 
 const app = createApp(App);
 
