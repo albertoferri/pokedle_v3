@@ -14,7 +14,7 @@
     <div v-else>
       <p>Caricamento carte...</p>
     </div>
-    <div class="pagination">
+    <div class="pagination pt-3 pb-5">
       <button @click="previousPage" :disabled="page === 1">Indietro</button>
       <button @click="nextPage">Avanti</button>
     </div>
