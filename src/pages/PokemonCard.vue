@@ -3,7 +3,7 @@
       <h1>Elenco delle Carte Pokémon</h1>
       <input v-model="searchQuery" placeholder="Cerca una carta per nome" />
       <button @click="searchPokemons">Cerca</button>
-      <button @click="goToGuessCard">Indovina una Carta</button>
+      <button class="bg-success border-success" @click="goToGuessCard">Indovina una Carta</button>
       <div v-if="pokemons.length" class="pokemon-grid">
         <div v-for="pokemon in pokemons" :key="pokemon.id" class="pokemon-card" @click="goToCardDetail(pokemon.id)">
           <h2>{{ pokemon.name }}</h2>
