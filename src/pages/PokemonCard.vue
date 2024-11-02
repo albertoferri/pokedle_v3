@@ -115,6 +115,22 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+
+  // Media query per tablet (dimensioni tipiche: 768px - 1024px)
+  @media (max-width: 1440px) {
+    flex: 0 0 calc(100% / 3 - 16px); // 3 colonne su tablet
+  }
+
+  // Media query per mobile (dimensioni tipiche: meno di 768px)
+  @media (max-width: 911px) {
+    flex: 0 0 calc(100% / 2 - 16px); // 2 colonne su mobile
+  }
+
+  // Media query per schermi molto piccoli (ad esempio, telefoni più piccoli)
+  @media (max-width: 611px) {
+    flex: 0 0 calc(100% - 16px); // 1 colonna su schermi molto piccoli
+  }
 }
 
 .pokemon-card h2 {

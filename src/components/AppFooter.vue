@@ -92,7 +92,7 @@ footer{
   background-color: #171a1d;
 
 
-  max-height: 300px;
+  // max-height: 300px;
 
   .pokemulti{
     height: auto;
@@ -181,6 +181,13 @@ footer{
 
 .sub-footer{
   margin-top: 1rem;
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+
+  
 }
 
 
