@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar bg-dark navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img class="img-fluid h-75 mt-2" src="../assets/poke-logo-new.png" alt="logo nav">
@@ -34,6 +34,8 @@ export default {
 
 <style lang="scss">
 nav {
+
+  background-color: #171a1d;
   .navbar-brand {
     height: 100px;
   }

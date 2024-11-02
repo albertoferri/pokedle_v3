@@ -58,7 +58,7 @@ export default {
 
 
 <template>
-  <footer class="bg-dark text-white text-center pb-3">
+  <footer class="text-white text-center pb-3">
     <div class="container">
       <div class="row">
         <div class="col-about col-10 offset-1 offset-md-0 col-md-4 d-flex flex-column justify-content-center align-items-center">
@@ -88,6 +88,9 @@ export default {
 <style lang="scss" scoped>
 
 footer{
+
+  background-color: #171a1d;
+
 
   max-height: 300px;
 
