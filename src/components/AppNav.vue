@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar bg-dark border-bottom border-warning navbar-expand-lg">
+  <nav class="navbar bg-dark navbar-expand-lg">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img class="img-fluid h-75 mt-2" src="../assets/poke-logo-new.png" alt="logo nav">

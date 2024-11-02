@@ -58,7 +58,7 @@ export default {
 
 
 <template>
-  <footer class="bg-dark text-white text-center border-top border-warning py-3">
+  <footer class="bg-dark text-white text-center pb-3">
     <div class="container">
       <div class="row">
         <div class="col-about col-10 offset-1 offset-md-0 col-md-4 d-flex flex-column justify-content-center align-items-center">
@@ -88,6 +88,13 @@ export default {
 <style lang="scss" scoped>
 
 footer{
+
+  max-height: 300px;
+
+  .pokemulti{
+    height: auto;
+    max-width: 58%;
+  }
 
   .col-about {
     position: relative;

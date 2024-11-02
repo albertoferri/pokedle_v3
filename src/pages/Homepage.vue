@@ -4,35 +4,52 @@ import { ref } from 'vue';
 const message = ref("Benvenuto nel Pokédex!");
 </script>
 
+
+
 <template>
+
     <div class="content">
 
-        <div class="container mt-4">
-            <div class="row py-5">
-                <div class="col-12 col-md-4 mb-4" v-for="n in 6" :key="n">
-                    <div class="card h-100">
-                    <img src="https://occ-0-8407-2219.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABeNzg-kMHhUBP4AmHnLsrPYzxKHVceLnkwtLhxZlDssj7KjhStloJR6px7EbquZ83uDcygnWkekxysvuNYVzLQ3GyBMRl2PpU7pO.jpg?r=db8" class="card-img-top" alt="Card image">
-                    <div class="card-body">
-                        <h5 class="card-title"> GENERAZIONE {{ n }}</h5>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <div class="block col-6 bg-danger"></div>
+                        <div class="block col-6 bg-warning"></div>
                     </div>
+                    <div class="row">
+                        <div class="block col-3 bg-warning"></div>
+                        <div class="block col-6 bg-primary"></div>
+                        <div class="block col-3 bg-danger"></div>
                     </div>
                 </div>
+                <div class="col-3 bg-info"></div>
             </div>
         </div>
 
 
-        
-
     </div>
 </template>
+
 
 <style lang="scss" scoped>
 
 .content{
-    background-image: url('https://i.pinimg.com/564x/6f/d9/e6/6fd9e6a4bcb5676aaf34c2db9a110ee7.jpg');
-    background-size: contain;
+    background: url('../assets/background-nobg.png') repeat 0 0;
+    animation: animate-bg 20s infinite linear;
 
 
+    .block{
+        height: 300px;
+    }
+
+    
+
+    
+    @keyframes animate-bg{
+        100%{
+            background-position: 100px 100px;
+        }
+    }
 }
-
 </style>

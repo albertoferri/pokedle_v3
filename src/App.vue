@@ -22,7 +22,7 @@ export default{
  
 <AppNav></AppNav>
 
-<div class="py-5 bg-dark">
+<div class=" bg-dark">
 
   <router-view></router-view>
 
