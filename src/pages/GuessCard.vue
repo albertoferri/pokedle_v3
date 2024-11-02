@@ -1,3 +1,35 @@
+<template>
+  <div v-if="randomPokemon" class="guess-card container">
+    <div class="row">
+      <div class="col-lg-8 col-12 col-img mb-5">
+        <h2 class="text-white mb-5">Indovina il nome della carta Pokémon!!!</h2>
+        <div v-if="isLoading" class="loading-spinner">
+          <i class="fa-solid fa-gear fa-spin"></i>
+        </div>
+        <img v-else :src="randomPokemon.images.large" :style="{ filter: `blur(${blurAmount}px)` }" :class="['blurred-image mt-4', errorClass, successClass]" />
+      </div>
+      <div class="col-lg-4 col-12 d-flex flex-column justify-content-center">
+        <input v-model="guess" placeholder="Nome della carta" @keyup.enter="checkGuess" class="guess-input mt-5 mt-lg-0" :disabled="isLoading" />
+        <button @click="checkGuess" :disabled="isLoading">Verifica</button>
+        <p v-if="successMessage" class="success-message" v-html="message"></p>
+        <p v-if="errorMessage" class="error-message" v-html="message"></p>
+        <p class="text-white mt-3">Numero di tentativi: {{ attempts }} / {{ maxAttempts }}</p>
+        <p class="text-white">Pokemon indovinati: {{ correctGuesses }}</p>
+        <div v-if="showPopup" class="popup">
+          <div class="popup-content">
+            <p>Hai perso!</p>
+            <button @click="reloadPage">Riprova</button>
+            <button @click="goToStatistics">Visualizza statistiche</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-else>
+    <p>Caricamento carta...</p>
+  </div>
+</template>
+
 <script>
 import pokemonService from '../service/pokemonService';
 
@@ -6,15 +38,17 @@ export default {
     return {
       randomPokemon: null,
       guess: '',
-      blurAmount: 20, // Sfocatura iniziale maggiore
+      blurAmount: 20,
       message: '',
       attempts: 0,
-      maxAttempts: 10, // Limite massimo di tentativi
+      maxAttempts: 10,
       correctGuesses: 0,
       successMessage: false,
       errorMessage: false,
       errorClass: '',
-      isLoading: false // Stato di caricamento
+      successClass: '', // Aggiunto per gestire la classe animate__tada
+      isLoading: false,
+      showPopup: false,
     };
   },
   async created() {
@@ -22,7 +56,7 @@ export default {
   },
   methods: {
     async fetchRandomCard() {
-      this.isLoading = true; // Inizia il caricamento
+      this.isLoading = true;
       try {
         const randomPokemon = await pokemonService.getRandomCard();
         this.randomPokemon = randomPokemon;
@@ -30,11 +64,11 @@ export default {
       } catch (error) {
         console.error('Error fetching random Pokémon card:', error);
       }
-      this.isLoading = false; // Fine del caricamento
+      this.isLoading = false;
     },
     checkGuess() {
       if (this.isLoading) return;
-      
+
       this.attempts += 1;
       if (this.guess.toLowerCase() === this.randomPokemon.name.toLowerCase()) {
         this.message = 'Bravo! Hai indovinato! <i class="fa-solid fa-rocket"></i><i class="fa-solid fa-rocket"></i>';
@@ -42,7 +76,9 @@ export default {
         this.successMessage = true;
         this.errorMessage = false;
         this.errorClass = '';
+        this.successClass = 'animate__animated animate__tada'; // Aggiunge la classe animate__tada
         this.correctGuesses += 1;
+        this.updateStats(true); // Aggiorna le statistiche
         this.attempts = 0; // Ripristina i tentativi
         this.nextPokemon();
       } else {
@@ -53,6 +89,7 @@ export default {
           this.blurAmount -= 2; // Diminuire lentamente la sfocatura
         }
         this.errorClass = '';
+        this.successClass = ''; // Resetta la classe animate__tada
         setTimeout(() => {
           this.errorClass = 'animate__animated animate__shakeX'; // Classe animazione errore
         }, 100); // Timeout breve per rimuovere e riaggiungere la classe
@@ -60,7 +97,8 @@ export default {
           this.message = 'Hai raggiunto il numero massimo di tentativi. Hai perso!';
           this.errorMessage = true;
           this.successMessage = false;
-          this.endGame();
+          this.updateStats(false); // Aggiorna le statistiche
+          this.showPopup = true; // Mostra il popup di sconfitta
         }
       }
     },
@@ -69,52 +107,28 @@ export default {
         this.blurAmount = 20; // Reimposta la sfocatura per il prossimo Pokémon
         this.message = '';
         this.guess = '';
+        this.successClass = ''; // Resetta la classe animate__tada
         await this.fetchRandomCard();
       }, 2000); // Mostra il messaggio di successo per 2 secondi prima di passare al prossimo
     },
     reloadPage() {
       window.location.reload();
     },
-    endGame() {
-      setTimeout(() => {
-        this.reloadPage();
-      }, 3000); // Ricarica la pagina dopo 3 secondi
-    }
-  }
+    goToStatistics() {
+      window.location.href = '/statistics'; // Sostituisci '/statistics' con il percorso della tua pagina delle statistiche
+    },
+    updateStats(won) {
+      const storedStats = JSON.parse(localStorage.getItem('gameStats')) || { gamesPlayed: 0, gamesWon: 0 };
+      storedStats.gamesPlayed++;
+      if (won) {
+        storedStats.gamesWon++;
+      }
+      localStorage.setItem('gameStats', JSON.stringify(storedStats));
+    },
+  },
 };
 </script>
 
-
-
-
-<template>
-  <div v-if="randomPokemon" class="guess-card container">
-    <div class="row">
-      <div class="col-lg-8 col-12 col-img mb-5">
-        <h2 class="text-whited">Indovina il nome della carta Pokémon</h2>
-        <div v-if="isLoading" class="loading-spinner">
-          <i class="fa-solid fa-circle-notch fa-spin"></i>
-        </div>
-        <img v-else :src="randomPokemon.images.large" :style="{ filter: `blur(${blurAmount}px)` }" :class="['blurred-image', errorClass]" />
-      </div>
-      <div class="col-lg-4 col-12 d-flex flex-column justify-content-center">
-        <input v-model="guess" placeholder="Nome della carta" @keyup.enter="checkGuess" class="guess-input mt-5 mt-lg-0" :disabled="isLoading" />
-        <button @click="checkGuess" :disabled="isLoading">Verifica</button>
-        <p v-if="successMessage" class="success-message" v-html="message"></p>
-        <p v-if="errorMessage" class="error-message" v-html="message"></p>
-        <p class="text-white mt-3">Numero di tentativi: {{ attempts }} / {{ maxAttempts }}</p>
-        <p class="text-white">Pokemon indovinati: {{ correctGuesses }}</p>
-        <!-- <button class="btn btn-success" @click="reloadPage" :disabled="isLoading">Prova un altro Pokémon</button> -->
-      </div>
-    </div>
-  </div>
-  <div v-else>
-    <p>Caricamento carta...</p>
-  </div>
-</template>
-
-
-  
 <style scoped lang="scss">
 .guess-card {
   text-align: center;
@@ -159,11 +173,29 @@ input.guess-input {
   box-shadow: 0 0 10px red;
 }
 .loading-spinner {
-  font-size: 48px; /* Dimensione dell'icona di caricamento */
-  color: #3498db; /* Colore dell'icona di caricamento */
+  font-size: 48px;
+  color: #e8d716;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 50vh;
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
 }
 </style>
