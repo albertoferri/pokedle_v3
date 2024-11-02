@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="search input-group w-50 offset-3 mb-5 pt-5">
+    <div class="search input-group mb-5 pt-5">
       <input type="text" v-model="searchQuery" class="form-control bg-dark" placeholder="Cerca una carta" aria-label="Cerca una carta" aria-describedby="button-addon2">
       <button class="btn btn-outline-secondary" @click="searchPokemons" type="button" id="button-addon2">Cerca</button>
     </div>
@@ -130,6 +130,16 @@ export default {
   // Media query per schermi molto piccoli (ad esempio, telefoni più piccoli)
   @media (max-width: 611px) {
     flex: 0 0 calc(100% - 16px); // 1 colonna su schermi molto piccoli
+  }
+}
+
+.search{
+  width: 50%;
+  margin-left: 25%;
+
+  @media (max-width: 911px) {
+    width: 100%;
+    margin-left: 0;
   }
 }
 
