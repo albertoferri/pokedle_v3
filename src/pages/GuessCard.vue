@@ -121,10 +121,10 @@ export default {
         <p class="text-white mt-3">Numero di tentativi: {{ attempts }} / {{ maxAttempts }}</p>
         <p class="text-white">Pokémon indovinati: {{ correctGuesses }}</p>
         <div v-if="showPopup" class="popup">
-          <div class="popup-content">
-            <h3>Hai perso!</h3>
-            <button @click="reloadPage">Riprova</button>
-            <button @click="goToStatistics">Visualizza statistiche</button>
+          <div class="popup-content bg-dark">
+            <h3 class="text-white mb-3">Hai perso!</h3>
+            <button class="btn-yellow text-white" @click="reloadPage">Riprova</button>
+            <button class="btn-blue text-white disabled" disabled @click="goToStatistics">Visualizza statistiche</button>
           </div>
         </div>
       </div>

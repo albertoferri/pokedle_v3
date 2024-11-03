@@ -77,17 +77,17 @@
 
 
   &:hover {
-    background-color: #d4ac0d;
+    background-color: #ff8801;
     color: black;
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.5);
+    box-shadow: 0 0 0 3px rgba(244, 132, 4, 0.5);
   }
 
   &:active {
-    background-color: darken(#d4ac0d, 10%);
+    background-color: darken(#ff8801, 10%);
   }
 }
 
@@ -100,6 +100,12 @@
 .btn-size-sm {
   padding: 5px 10px;
   font-size: 0.8rem;
+}
+
+
+.disabled{
+  filter: opacity(.5);
+  cursor: not-allowed !important;
 }
 
 

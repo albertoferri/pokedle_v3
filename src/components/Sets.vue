@@ -67,9 +67,9 @@ export default {
         </div>
       </div>
     </div>
-    <div class="title-div d-flex justify-content-between align-items-center mb-5">
-      <h1 class="ms-5 display-1 fw-bold">Elenco dei Set Pokémon</h1>
-      <div class="pagination-container me-5" v-if="totalPages > 1">
+    <div class="title-div d-flex justify-content-between align-items-center flex-column flex-md-row  mb-5">
+      <h1 class="ms-0 ms-lg-5 display-2 fw-bold">Elenco dei Set Pokémon</h1>
+      <div class="pagination-container me-0 me-md-5" v-if="totalPages > 1">
         <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{'active': currentPage === page}">
           {{ page }}
         </button>
@@ -195,6 +195,15 @@ export default {
   transform: perspective(1000px) translateZ(0);
   z-index: 1;
 
+
+  @media (max-width: 992px) {
+    flex: 1 1 calc(50% - 16px);
+  }
+
+  @media (max-width: 576px) {
+    flex: 1 1 100%;
+  }
+
   &:hover {
     z-index: 99;
     background-color: #ffcd00;
@@ -233,8 +242,15 @@ export default {
 }
 
 .pagination-container {
+
+  display: flex;
+  justify-content: end;
+  flex-wrap: wrap;
+
+
   button {
-    margin: 0 5px;
+    width: calc(80% / 3 - 10px);
+    margin: 5px 5px;
     padding: 5px 10px;
     background-color: #2b3136;
     border: none;
