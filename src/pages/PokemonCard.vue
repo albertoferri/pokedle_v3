@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="search input-group mb-5 pt-5">
       <input type="text" v-model="searchQuery" class="form-control bg-dark" placeholder="Cerca una carta" aria-label="Cerca una carta" aria-describedby="button-addon2">
-      <button class="btn btn-outline-secondary" @click="searchPokemons" type="button" id="button-addon2">Cerca</button>
+      <button class="btn-yellow" @click="searchPokemons" type="button" id="button-addon2">Cerca</button>
     </div>
     <h1 class="text-center">Elenco delle Carte Pokémon</h1>
     <div v-if="pokemons.length" class="pokemon-grid">
@@ -11,12 +11,12 @@
         <img :src="pokemon.images.small" :alt="pokemon.name" />
       </div>
     </div>
-    <div v-else>
-      <p>Caricamento carte...</p>
+    <div v-else class="loading-container">
+      <img src="https://assets.pokemon.com/static2/_ui/img/chrome/loaders/pokeball_gray.png" class="rotating-image" />
     </div>
     <div class="pagination pt-3 pb-5">
-      <button @click="previousPage" :disabled="page === 1">Indietro</button>
-      <button @click="nextPage">Avanti</button>
+      <button class="btn-yellow" @click="previousPage" :disabled="page === 1">Indietro</button>
+      <button class="btn-yellow" @click="nextPage">Avanti</button>
     </div>
   </div>
 </template>
@@ -92,12 +92,51 @@ export default {
 <style scoped lang="scss">
 .container-fluid {
   color: white;
+
+  background: url('../assets/background-nobg.png') repeat 0 0;
+    animation: animate-bg 20s infinite linear;
+
+   
+    @keyframes animate-bg {
+        100% {
+            background-position: 100px 100px;
+        }
+    }
+}
+
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52vh;
+  width: 100%;
+}
+
+.rotating-image {
+  width: 75px; /* Aumentato a 75px */
+  height: 75px; /* Aumentato a 75px */
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate { 
+  0% { 
+    transform: rotate(0deg); 
+  }
+  100% { 
+    transform: rotate(360deg); 
+  } 
 }
 
 
 .form-control::placeholder {
   color: white;
   opacity: 1;
+}
+
+.form-control:focus {
+  border-color: yellow;
+  box-shadow: 0 0 0 1px rgba(255, 255, 0, 0.388);
 }
 
 .pokemon-grid {
@@ -154,16 +193,6 @@ export default {
   margin-top: 16px;
 }
 
-button {
-  padding: 8px 16px;
-  background-color: yellow;
-  border-radius: 5px;
-  border: 1px solid yellow;
-  color: black;
-  font-weight: bold;
-  margin: 0 8px;
-  cursor: pointer;
-}
 
 input {
   padding: 8px;

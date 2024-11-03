@@ -34,8 +34,73 @@
 
 
 
+/* BUTTON */
+.btn-blue {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #2d66bc;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+  }
+
+  &:active {
+    background-color: darken(#2d66bc, 10%);
+  }
+}
+
+.btn-yellow {
+  background-color: #f1c40f;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-right: 10px;
 
 
+  &:hover {
+    background-color: #d4ac0d;
+    color: black;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.5);
+  }
+
+  &:active {
+    background-color: darken(#d4ac0d, 10%);
+  }
+}
+
+
+.btn-size-lg {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+}
+
+.btn-size-sm {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+}
 
 
 

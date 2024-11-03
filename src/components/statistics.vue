@@ -1,33 +1,3 @@
-<script>
-export default {
-  data() {
-    return {
-      stats: {
-        gamesPlayed: 0,
-        gamesWon: 0
-      },
-      winPercentage: 0
-    };
-  },
-  computed: {
-    hasStats() {
-      return this.stats.gamesPlayed > 0;
-    }
-  },
-  methods: {
-    resetStats() {
-      this.stats.gamesPlayed = 0;
-      this.stats.gamesWon = 0;
-      this.winPercentage = 0;
-    },
-    goBack() {
-      window.history.back();
-    }
-  }
-};
-</script>
-
-
 <template>
   <div class="container">
     <div class="button-group mb-5">
@@ -61,22 +31,60 @@ export default {
     </div>
     <div class="no-stats" v-else>
       <p>Non ci sono ancora statistiche disponibili. Gioca una partita per vedere le tue statistiche!</p>
-      <!-- <button @click="goBack" class="btn btn-secondary">Torna Indietro</button> -->
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      stats: {
+        gamesPlayed: 0,
+        gamesWon: 0
+      },
+      winPercentage: 0
+    };
+  },
+  computed: {
+    hasStats() {
+      return this.stats.gamesPlayed > 0;
+    }
+  },
+  watch: {
+    stats: {
+      deep: true,
+      handler() {
+        this.calculateWinPercentage();
+      }
+    }
+  },
+  methods: {
+    calculateWinPercentage() {
+      if (this.stats.gamesPlayed > 0) {
+        this.winPercentage = ((this.stats.gamesWon / this.stats.gamesPlayed) * 100).toFixed(2);
+      } else {
+        this.winPercentage = 0;
+      }
+    },
+    resetStats() {
+      this.stats.gamesPlayed = 0;
+      this.stats.gamesWon = 0;
+      this.winPercentage = 0;
+    },
+    goBack() {
+      window.history.back();
+    }
+  }
+};
+</script>
 
-  
-
-  
-<style lang="scss" scoped>
-
-*{
+<style scoped lang="scss">
+* {
   color: white;
 }
 
-button{
+button {
   padding: 8px 16px;
   background-color: orangered;
   border-radius: 5px;
@@ -86,8 +94,5 @@ button{
   margin: 0 8px;
   cursor: pointer;
 }
-
-
-
-
 </style>
+  

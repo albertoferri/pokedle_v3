@@ -1,4 +1,5 @@
 import pokemon from 'pokemontcgsdk';
+import axios from 'axios';
 
 pokemon.configure({ apiKey: '7c1da767-856c-4eac-9b42-68ed220d3a78' });
 
@@ -22,6 +23,18 @@ const getSetById = async (id) => {
   }
 };
 
+const getAllSets = async () => { 
+  try { 
+    const response = await pokemon.set.all(); 
+    // console.log('Risposta API:', response);
+    return response; } 
+    catch (error) { 
+    console.error('Error fetching sets:', error); 
+    throw error; 
+    }
+};
+
+const getCardsBySet = async (setId) => { try { const response = await axios.get(`https://api.pokemontcg.io/v2/cards?q=set.id:${setId}`); return response.data.data; } catch (error) { console.error(`Error fetching cards for set ${setId}:`, error); throw error; } };
 const getSupertypes = async () => {
   try {
     const supertypes = await pokemon.supertype.all();
@@ -86,6 +99,8 @@ const getRandomCard = async () => {
 export default {
   getCardById,
   getSetById,
+  getAllSets,
+  getCardsBySet,
   getSupertypes,
   getSubtypes,
   getTypes,
