@@ -1,8 +1,9 @@
 <template>
   <div class="container-fluid">
     <div class="search input-group mb-5 pt-5">
-      <input type="text" v-model="searchQuery" class="form-control bg-dark" placeholder="Cerca una carta" aria-label="Cerca una carta" aria-describedby="button-addon2">
-      <button class="btn-yellow" @click="searchPokemons" type="button" id="button-addon2">Cerca</button>
+      <input type="text" v-model="searchQuery" class="form-control bg-dark text-white" placeholder="Cerca una carta" aria-label="Cerca una carta" aria-describedby="button-addon2">
+      <button class="btn-yellow rounded-end-1" @click="searchPokemons" type="button" id="button-addon2">Cerca</button>
+      <button class="btn-blue ms-2 rounded-1" @click="resetSearch" type="button">Reset</button>
     </div>
     <h1 class="text-center">Elenco delle Carte Pokémon</h1>
     <div v-if="pokemons.length" class="pokemon-grid">
@@ -31,7 +32,7 @@ export default {
       pokemons: [],
       page: 1,
       pageSize: 50,
-      searchQuery: '',
+      searchQuery: localStorage.getItem('searchQuery') || '', // Recupera il valore salvato
       cardsPerRow: 4,
     };
   },
@@ -42,10 +43,17 @@ export default {
     }
   },
   watch: {
-    page: 'fetchPokemons'
+    page: 'fetchPokemons',
+    searchQuery(newQuery) {
+      localStorage.setItem('searchQuery', newQuery); // Salva il valore
+    }
   },
   async created() {
-    this.fetchPokemons();
+    if (this.searchQuery) {
+      await this.searchPokemons(); // Cerca automaticamente se c'è un valore salvato
+    } else {
+      this.fetchPokemons();
+    }
   },
   methods: {
     async fetchPokemons() {
@@ -69,6 +77,11 @@ export default {
         console.error(`Error searching Pokémon cards for name "${this.searchQuery}":`, error);
       }
     },
+    resetSearch() { 
+      this.searchQuery = ''; 
+      localStorage.removeItem('searchQuery'); 
+      this.fetchPokemons(); 
+    },
     nextPage() {
       if (this.page * this.pageSize < this.pokemons.length) {
         this.page += 1;
@@ -87,6 +100,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style scoped lang="scss">
