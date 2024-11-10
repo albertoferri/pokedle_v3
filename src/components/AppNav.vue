@@ -5,10 +5,10 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg h-50">
+  <nav class="navbar navbar-expand-lg ">
     <div class="container-fluid">
       <router-link class="navbar-brand d-flex align-items-center ms-3" to="/">
-        <img class="img-fluid h-75" src="../assets/poke-logo-new.png" alt="logo nav">
+        <img class="img-fluid h-90" src="../assets/poke-logo-new.png" alt="logo nav">
       </router-link>
 
       <!-- Custom Toggle Icon -->
@@ -28,16 +28,16 @@ export default {
       </svg>
 
       <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
-        <ul class="navbar-nav mb-2 mb-lg-0 row d-flex flex-row justify-content-evenly justify-content-lg-start w-100">
-          <router-link to="/sets" class="nav-item col-12 col-md-4 col-xl-2 py-0 d-flex flex-column justify-content-center align-items-center nav-link my-2">
-            <h3 class="active fs-5 mx-0 fw-bold text-light mb-0" aria-current="page">SCOPRI I SET</h3>
+        <ul class="navbar-nav mb-2 mb-lg-0 row d-flex flex-row justify-content-evenly justify-content-lg-center w-100">
+          <router-link to="/sets" class="nav-item col-12 col-md-4 col-lg-auto py-0 d-flex flex-column justify-content-center align-items-center nav-link my-2">
+            <h3 class="active fs-5 mx-0 fw-bold text-warning mb-0" aria-current="page">SCOPRI I SET</h3>
             <img src="../assets/master-nobg.png" alt="Your Image" class="mx-3 d-lg-none" style="width: 50px; height: auto;">
           </router-link>
-          <router-link to="/guess" class="nav-item col-12 col-md-4 col-xl-2 py-0 d-flex flex-column justify-content-center align-items-center nav-link m-2">
+          <router-link to="/guess" class="nav-item col-12 col-md-4 col-lg-auto py-0 d-flex flex-column justify-content-center align-items-center nav-link m-2">
             <h3 class="active fs-5 mx-0 fw-bold text-primary mb-0" aria-current="page">GUESS THE CARD</h3>
             <img src="../assets/egg_pokemon.svg" alt="Your Image" class="mx-3 d-lg-none" style="width: 50px; height: auto;">
           </router-link>
-          <router-link to="/pokemon" class="nav-item col-12 col-md-4 col-xl-2 py-0 d-flex flex-column justify-content-center align-items-center nav-link my-2">
+          <router-link to="/pokemon" class="nav-item col-12 col-md-4 col-lg-auto py-0 d-flex flex-column justify-content-center align-items-center nav-link my-2">
             <h3 class="active fs-5 mx-0 fw-bold text-danger mb-0" aria-current="page">CARTE</h3>
             <img src="../assets/pikachu.png" alt="Your Image" class="mx-3 d-lg-none" style="width: 50px; height: auto;">
           </router-link>
@@ -72,7 +72,7 @@ nav {
 .nav {
   --color: #ffffff; 
   background: none;
-  width: 100px;
+  width: 78px;
   height: 56px;
   position: relative;
   display: flex;

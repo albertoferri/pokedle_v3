@@ -59,7 +59,7 @@ export default {
 
 <template>
   <footer class="text-white text-center pb-3">
-    <div class="container">
+    <div class="container-fluid container-xl">
       <div class="row">
         <div class="col-about col-10 offset-1 offset-md-0 col-md-4 d-flex flex-column justify-content-center align-items-center">
           <img class="footer-img poke-about mt-5 mt-md-0" src="../assets/poke-about-xl.png" alt="pokèabout image">
@@ -93,6 +93,8 @@ footer{
 
 
   // max-height: 300px;
+
+
 
   .pokemulti{
     height: auto;
@@ -193,7 +195,7 @@ footer{
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
 
   .poke-about,

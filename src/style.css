@@ -109,6 +109,11 @@
 }
 
 
+.h-90{
+  max-height: 90% !important;
+}
+
+
 
 /* scollbar */
 /* Firefox (uncomment to work in Firefox, although other properties will not work!)  */

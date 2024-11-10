@@ -1,3 +1,49 @@
+<template>
+  <div class="sets-container">
+    <div class="toggle-wrapper d-flex justify-content-end align-items-center me-5">
+      <label class="toggle-label fs-4 fw-bold me-2">SUONI </label>
+      <input class="toggle-checkbox h-100" type="checkbox" v-model="isSoundEnabled">
+      <div class="toggle-container">  
+        <div class="toggle-button">
+          <div class="toggle-button-circles-container">
+            <!-- Circle elements omitted for brevity -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title-div d-flex justify-content-between align-items-center flex-column flex-md-row  mb-5">
+      <h1 class="ms-0 ms-lg-5 display-2 fw-bold">Elenco dei Set Pokémon</h1>
+      <div class="pagination-container me-0 me-md-5" v-if="totalPages > 1">
+        <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{'active': currentPage === page}">
+          {{ page }}
+        </button>
+      </div>
+    </div>
+    <div v-if="sets && sets.length" class="sets-grid px-5">
+      <RouterLink 
+        v-for="set in paginatedSets" 
+        :key="set.id" 
+        :to="`/set/${set.id}`" 
+        class="set-card text-decoration-none text-white d-flex flex-column align-items-center gap-2"
+        @mouseenter="playHoverSound"
+        @click="logSetId(set.id)"  
+      >
+        <h2>{{ set.name }}</h2>
+        <p class="m-0">Serie: {{ set.series }}</p>
+        <img class="set-img" :src="set.images.logo" :alt="set.name" />
+      </RouterLink>
+    </div>
+    <div v-else class="loading-container">
+      <img src="https://assets.pokemon.com/static2/_ui/img/chrome/loaders/pokeball_gray.png" class="rotating-image" />
+    </div>
+    <div class="pagination-container mt-4 pb-4" v-if="totalPages > 1">
+      <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{'active': currentPage === page}">
+        {{ page }}
+      </button>
+    </div>
+  </div>
+</template>
+
 <script>
 import { RouterLink } from 'vue-router';
 import pokemonService from '../service/pokemonService';
@@ -11,6 +57,11 @@ export default {
       itemsPerPage: 30,
       hoverSound: null,
       isSoundEnabled: false,
+      paginatedSets: [
+        // Dati di esempio
+        { id: 'base1', name: 'Base Set' },
+        { id: 'base2', name: 'Jungle' },
+      ]
     };
   },
   computed: {
@@ -48,58 +99,12 @@ export default {
         });
       }
     },
+    logSetId(setId) {
+      console.log('Clicked set ID:', setId);  // Log the set ID to the console
+    }
   },
 };
 </script>
-
-
-
-<template>
-  <div class="sets-container">
-    <div class="toggle-wrapper d-flex justify-content-end align-items-center me-5">
-      <label class="toggle-label fs-4 fw-bold me-2">SUONI </label>
-      <input class="toggle-checkbox h-100" type="checkbox" v-model="isSoundEnabled">
-      <div class="toggle-container">  
-        <div class="toggle-button">
-          <div class="toggle-button-circles-container">
-            <!-- Circle elements omitted for brevity -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="title-div d-flex justify-content-between align-items-center flex-column flex-md-row  mb-5">
-      <h1 class="ms-0 ms-lg-5 display-2 fw-bold">Elenco dei Set Pokémon</h1>
-      <div class="pagination-container me-0 me-md-5" v-if="totalPages > 1">
-        <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{'active': currentPage === page}">
-          {{ page }}
-        </button>
-      </div>
-    </div>
-    <div v-if="sets && sets.length" class="sets-grid px-5">
-      <RouterLink 
-        to="/set/${set.id}" 
-        v-for="set in paginatedSets" 
-        :key="set.id" 
-        class="set-card text-decoration-none text-white d-flex flex-column align-items-center gap-2"
-        @mouseenter="playHoverSound"
-      >
-        <h2>{{ set.name }}</h2>
-        <p class="m-0">Serie: {{ set.series }}</p>
-        <img class="set-img" :src="set.images.logo" :alt="set.name" />
-      </RouterLink>
-    </div>
-    <div v-else class="loading-container">
-      <img src="https://assets.pokemon.com/static2/_ui/img/chrome/loaders/pokeball_gray.png" class="rotating-image" />
-    </div>
-    <div class="pagination-container mt-4 pb-4" v-if="totalPages > 1">
-      <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{'active': currentPage === page}">
-        {{ page }}
-      </button>
-    </div>
-  </div>
-</template>
-
-
 
 <style scoped lang="scss">
 .sets-container {
@@ -195,7 +200,6 @@ export default {
   transform: perspective(1000px) translateZ(0);
   z-index: 1;
 
-
   @media (max-width: 992px) {
     flex: 1 1 calc(50% - 16px);
   }
@@ -214,8 +218,7 @@ export default {
 .set-img {
   max-width: 100%;
   max-height: 200px;
-
-  margin-top: auto
+  margin-top: auto;
 }
 
 .loading-container {
@@ -242,11 +245,9 @@ export default {
 }
 
 .pagination-container {
-
   display: flex;
   justify-content: end;
   flex-wrap: wrap;
-
 
   button {
     width: calc(80% / 3 - 10px);
@@ -266,4 +267,3 @@ export default {
   }
 }
 </style>
-

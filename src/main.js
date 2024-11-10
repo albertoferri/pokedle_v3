@@ -8,7 +8,6 @@ import pokemon from 'pokemontcgsdk';
 
 pokemon.configure({ apiKey: import.meta.env.VITE_CARD_API });
 
-
 const app = createApp(App);
 
 app.config.globalProperties.$pokemonApi = pokemon;
