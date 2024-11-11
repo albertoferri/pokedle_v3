@@ -38,14 +38,14 @@ export default {
 <template>
     <div v-if="card" class="card-detail">
       <button class="back-button fw-bold" @click="goBack">Torna Indietro</button>
-      <div class="card-content">
-          <div class="col-12 col-md-7 d-flex justify-content-center flex-column">
-            <div class="card-header">
-                <h1 class="text-start">{{ card.name }}</h1>
-                <img :src="card.images.large" @click="zoomCard" class="card-image img fluid" />
-            </div>
+      <div class="card-content row">
+        <div class="col-12 col-md-7 d-flex justify-content-center flex-column">
+          <div class="card-header d-flex flex-column align-items-center">
+              <h1 class="text-start">{{ card.name }}</h1>
+              <img :src="card.images.large" @click="zoomCard" class="card-image img fluid" />
+          </div>
         </div>
-        <div class="card-info col-12 col-md-5">
+        <div class="card-info col-12 col-md-5 d-none d-lg-block">
           <p class="fw-bold">HP: <span class="fw-normal">{{ card.hp }}</span></p>
           <p class="fw-bold">Type: <span class="fw-normal">{{ card.types.join(', ') }}</span></p>
           <p class="fw-bold">Level: <span class="fw-normal">{{ card.level }}</span></p>
