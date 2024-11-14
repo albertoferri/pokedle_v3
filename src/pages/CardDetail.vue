@@ -42,7 +42,7 @@ export default {
         <div class="col-12 col-md-7 d-flex justify-content-center flex-column">
           <div class="card-header d-flex flex-column align-items-center">
               <h1 class="text-start">{{ card.name }}</h1>
-              <img :src="card.images.large" @click="zoomCard" class="card-image img fluid" />
+              <img :src="card.images.large" @click="zoomCard" class="card-image img-fluid" />
           </div>
         </div>
         <div class="card-info col-12 col-md-5 d-none d-lg-block">

@@ -14,13 +14,16 @@ export default {
       successMessage: false,
       errorMessage: false,
       errorClass: '',
-      successClass: '', // Aggiunto per gestire la classe animate__tada
+      successClass: '',
       isLoading: false,
       showPopup: false,
+      progress: 0, // Aggiunto per la barra di progresso
+      attemptsLeftMessage: '', // Messaggio per i tentativi rimanenti
+      selectedType: '',
     };
   },
-  async created() {
-    await this.fetchRandomCard();
+  created() {
+    this.fetchRandomCard();
   },
   methods: {
     async fetchRandomCard() {
@@ -37,53 +40,69 @@ export default {
     checkGuess() {
       if (this.isLoading) return;
 
-      this.attempts += 1;
       if (this.guess.toLowerCase() === this.randomPokemon.name.toLowerCase()) {
         this.message = 'Bravo! Hai indovinato! <i class="fa-solid fa-rocket"></i><i class="fa-solid fa-rocket"></i>';
         this.blurAmount = 0;
         this.successMessage = true;
         this.errorMessage = false;
         this.errorClass = '';
-        this.successClass = 'animate__animated animate__tada'; // Aggiunge la classe animate__tada
+        this.successClass = 'animate__animated animate__tada';
         this.correctGuesses += 1;
-        this.updateStats(true); // Aggiorna le statistiche
-        this.attempts = 0; // Ripristina i tentativi
+        this.updateStats(true);
+        this.attempts = 0;
+        this.progress = 0; // Resetta la barra di progresso
+        this.attemptsLeftMessage = ''; // Resetta il messaggio dei tentativi rimanenti
         this.nextPokemon();
       } else {
         this.message = '<i class="fa-solid fa-triangle-exclamation"></i> <i class="fa-solid fa-triangle-exclamation"></i> Sbagliato! <i class="fa-solid fa-triangle-exclamation"></i> <i class="fa-solid fa-triangle-exclamation"></i>';
         this.successMessage = false;
         this.errorMessage = true;
         if (this.blurAmount > 1) {
-          this.blurAmount -= 2; // Diminuire lentamente la sfocatura
+          this.blurAmount -= 2;
         }
         this.errorClass = '';
-        this.successClass = ''; // Resetta la classe animate__tada
+        this.successClass = '';
         setTimeout(() => {
-          this.errorClass = 'animate__animated animate__shakeX'; // Classe animazione errore
-        }, 100); // Timeout breve per rimuovere e riaggiungere la classe
+          this.errorClass = 'animate__animated animate__shakeX';
+        }, 100);
+
+        // Incrementa il conteggio dei tentativi e aggiorna la barra di progresso
+        this.attempts += 1;
+        this.progress = (this.attempts / this.maxAttempts) * 100;
+
+        // Aggiorna il messaggio dei tentativi rimanenti
+        const attemptsLeft = this.maxAttempts - this.attempts;
+        if (attemptsLeft <= 3) {
+          this.attemptsLeftMessage = attemptsLeft === 1 ? 
+            'Attenzione! Hai solo 1 tentativo rimanente.' : 
+            `Attenzione! Hai solo ${attemptsLeft} tentativi rimanenti.`;
+        } else {
+          this.attemptsLeftMessage = '';
+        }
+
         if (this.attempts >= this.maxAttempts) {
           this.message = 'Hai raggiunto il numero massimo di tentativi. Hai perso!';
           this.errorMessage = true;
           this.successMessage = false;
-          this.updateStats(false); // Aggiorna le statistiche
-          this.showPopup = true; // Mostra il popup di sconfitta
+          this.updateStats(false);
+          this.showPopup = true;
         }
       }
     },
     nextPokemon() {
       setTimeout(async () => {
-        this.blurAmount = 20; // Reimposta la sfocatura per il prossimo Pokémon
+        this.blurAmount = 20;
         this.message = '';
         this.guess = '';
-        this.successClass = ''; // Resetta la classe animate__tada
+        this.successClass = '';
         await this.fetchRandomCard();
-      }, 2000); // Mostra il messaggio di successo per 2 secondi prima di passare al prossimo
+      }, 2000);
     },
     reloadPage() {
       window.location.reload();
     },
     goToStatistics() {
-      window.location.href = '/statistics'; // Sostituisci '/statistics' con il percorso della tua pagina delle statistiche
+      window.location.href = '/statistics';
     },
     updateStats(won) {
       const storedStats = JSON.parse(localStorage.getItem('gameStats')) || { gamesPlayed: 0, gamesWon: 0 };
@@ -93,6 +112,15 @@ export default {
       }
       localStorage.setItem('gameStats', JSON.stringify(storedStats));
     },
+    getProgressColor(progress) {
+      if (progress < 33) {
+        return 'green';
+      } else if (progress < 66) {
+        return 'yellow';
+      } else {
+        return 'red';
+      }
+    }
   },
 };
 </script>
@@ -102,6 +130,14 @@ export default {
 <template>
   <div v-if="randomPokemon" class="guess-card container">
     <div class="row">
+      <!-- <div class="col-12">
+        <select v-model="selectedType">
+          <option value="">Tutte le carte</option>
+          <option value="V">V</option>
+          <option value="Mega">Mega</option>
+          <option value="VMAX">VMAX</option>
+        </select>
+      </div> -->
       <div class="col-lg-8 col-12 col-img mb-5">
         <h2 class="text-white mb-5">Indovina il nome della carta Pokémon!!!</h2>
         <div v-if="isLoading" class="loading-spinner">
@@ -118,8 +154,16 @@ export default {
           <p v-if="errorMessage" class="error-message" v-html="message"></p>
         </div>
         
-        <p class="text-white mt-3">Numero di tentativi: {{ attempts }} / {{ maxAttempts }}</p>
+        <!-- Barra di progresso -->
+        <div class="progress-bar-container mt-3">
+          <div class="progress-bar" :style="{ width: `${progress}%`, backgroundColor: getProgressColor(progress) }"></div>
+        </div>
+
+        <!-- Messaggio dei tentativi rimanenti -->
+        <p v-if="attemptsLeftMessage" class="attempts-left-message text-warning mt-2">{{ attemptsLeftMessage }}</p>
+
         <p class="text-white">Pokémon indovinati: {{ correctGuesses }}</p>
+
         <div v-if="showPopup" class="popup">
           <div class="popup-content bg-dark">
             <h3 class="text-white mb-3">Hai perso!</h3>
@@ -137,19 +181,16 @@ export default {
 
 
 
-
-
-
 <style scoped lang="scss">
 .guess-card {
   text-align: center;
   padding-top: 20px;
 }
+
 .blurred-image {
   max-width: 50%;
   height: auto;
 }
-
 
 input.guess-input {
   margin-bottom: 16px;
@@ -157,20 +198,25 @@ input.guess-input {
   width: 100%;
   box-sizing: border-box;
 }
+
 .success-message {
   color: green;
   font-weight: bold;
 }
+
 .error-message {
   color: red;
   font-weight: bold;
 }
+
 .col-img img {
   box-shadow: none;
 }
+
 .errorMessage img {
   box-shadow: 0 0 10px red;
 }
+
 .loading-container {
   display: flex;
   justify-content: center;
@@ -178,16 +224,19 @@ input.guess-input {
   height: 52vh;
   width: 50%;
 }
+
 .loading-spinner {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .rotating-image {
-  width: 75px; /* Aumentato a 75px */
-  height: 75px; /* Aumentato a 75px */
+  width: 75px;
+  height: 75px;
   animation: rotate 2s linear infinite;
 }
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);
@@ -196,6 +245,7 @@ input.guess-input {
     transform: rotate(360deg);
   }
 }
+
 .popup {
   position: fixed;
   top: 0;
@@ -208,10 +258,31 @@ input.guess-input {
   align-items: center;
   z-index: 1000;
 }
+
 .popup-content {
   background: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 8px;
   text-align: center;
+}
+
+.progress-bar-container {
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+}
+
+.attempts-left-message {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.text-warning {
+  color: #ff9800;
 }
 </style>

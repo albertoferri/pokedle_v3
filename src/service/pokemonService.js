@@ -23,6 +23,8 @@ const getSetById = async (id) => {
   }
 };
 
+
+
 const getAllSets = async () => { 
   try { 
     const response = await pokemon.set.all(); 
