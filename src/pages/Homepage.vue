@@ -48,14 +48,14 @@ export default {
     <div class="container-fluid">
       <div class="row justify-content-end">
         <div class="col-auto">
-          <button @click="toggleView" class="btn btn-yellow my-5">CAMBIA VISTA</button>
+          <button @click="toggleView" class="btn btn-yellow my-5 btn-size-lg"><i class="fa-solid fa-hurricane fa-spin fa-xl"></i></button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Swiper section for mobile view -->
-  <section v-if="isSwiperVisible" class="d-flex d-lg-none justify-content-center py-5">
+  <section v-if="isSwiperVisible" class="swiper-section d-flex d-lg-none justify-content-center py-5">
     <swiper-container class="mySwiper" effect="cards" keyboard="true" grab-cursor="true">
       <swiper-slide class="bg-warning"><router-link class="text-decoration-none text-light" to="/sets">SCOPRI I SET</router-link></swiper-slide>
       <swiper-slide class="bg-primary"><router-link class="text-decoration-none text-light" to="/guess">GUESS THE CARD</router-link></swiper-slide>
@@ -97,10 +97,30 @@ export default {
       }
     }
   }
-section {
+section.swiper-section {
+
+  max-width: 100%;
+  height: calc(100vh - 116px - 140px - 60px);
+
+  
   swiper-container {
     width: 240px;
     height: 320px;
+
+    @media (max-width: 500px) {
+      width: 200px;
+      height: 280px;
+    }
+
+    @media (max-width: 380px) {
+      width: 170px;
+      height: 260px;
+    }
+
+    @media (max-width: 322px) {
+      width: 140px;
+      height: 220px;
+    }
   }
 
   swiper-slide {
@@ -115,6 +135,12 @@ section {
 }
 
 .content {
+
+  @media (max-width: 992px){
+    position: relative;
+    top: -35px;
+  }
+
   .block {
     height: 300px;
     display: flex;

@@ -10,44 +10,44 @@ export default {
     pokeAbout.addEventListener('click', function() {
       if (!colAbout.classList.contains('active')) {
         colAbout.classList.add('active');
-        aboutText.classList.remove('animate__bounceOut'); // Assicurati di rimuovere la classe di chiusura
-        aboutText.classList.add('animate__animated', 'animate__bounceIn'); // Aggiungi animazione di apertura
-        aboutText.style.display = 'block'; // Mostra il paragrafo
+        aboutText.classList.remove('animate__bounceOut'); 
+        aboutText.classList.add('animate__animated', 'animate__bounceIn'); 
+        aboutText.style.display = 'block'; 
 
-        // Usando setTimeout per rimuovere l'opacità per evitare conflitti di animazione
+        
         setTimeout(() => {
-          aboutText.style.opacity = '1'; // Mostra il paragrafo dopo che è visibile
-        }, 10); // Piccolo timeout per permettere l'applicazione dell'animazione
+          aboutText.style.opacity = '1'; 
+        }, 10); 
       }
     });
 
     overlay.addEventListener('click', function() {
       colAbout.classList.remove('active');
-      aboutText.classList.remove('animate__bounceIn'); // Rimuovi animazione di apertura
-      aboutText.classList.add('animate__bounceOut'); // Aggiungi animazione di chiusura
+      aboutText.classList.remove('animate__bounceIn'); 
+      aboutText.classList.add('animate__bounceOut'); 
 
-      // Utilizza un timeout per rimuovere completamente il paragrafo
+      
       setTimeout(() => {
-        aboutText.style.opacity = '0'; // Nascondi il paragrafo dopo l'animazione
+        aboutText.style.opacity = '0'; 
         setTimeout(() => {
-          aboutText.style.display = 'none'; // Nascondi il paragrafo dopo l'animazione
-          aboutText.classList.remove('animate__bounceOut'); // Rimuovi animazione di chiusura
-        }, 500); // Assicurati che corrisponda alla durata dell'animazione di chiusura
-      }, 500); // Durata dell'animazione di chiusura
+          aboutText.style.display = 'none'; 
+          aboutText.classList.remove('animate__bounceOut'); 
+        }, 500); 
+      }, 500); 
     });
 
     aboutText.addEventListener('click', function() {
       colAbout.classList.remove('active');
-      aboutText.classList.remove('animate__bounceIn'); // Rimuovi animazione di apertura
-      aboutText.classList.add('animate__bounceOut'); // Aggiungi animazione di chiusura
+      aboutText.classList.remove('animate__bounceIn'); 
+      aboutText.classList.add('animate__bounceOut'); 
 
       setTimeout(() => {
-        aboutText.style.opacity = '0'; // Nascondi il paragrafo dopo l'animazione
+        aboutText.style.opacity = '0'; 
         setTimeout(() => {
-          aboutText.style.display = 'none'; // Nascondi il paragrafo dopo l'animazione
-          aboutText.classList.remove('animate__bounceOut'); // Rimuovi animazione di chiusura
-        }, 500); // Assicurati che corrisponda alla durata dell'animazione di chiusura
-      }, 500); // Durata dell'animazione di chiusura
+          aboutText.style.display = 'none'; 
+          aboutText.classList.remove('animate__bounceOut'); 
+        }, 500); 
+      }, 500); 
     });
   }
 }
@@ -58,7 +58,7 @@ export default {
 
 
 <template>
-  <footer class="text-white text-center pb-3">
+  <footer class="text-white text-center pb-3 d-none d-lg-block">
     <div class="container-fluid container-xl">
       <div class="row">
         <div class="col-about col-10 offset-1 offset-md-0 col-md-4 d-flex flex-column justify-content-center align-items-center">
@@ -82,10 +82,82 @@ export default {
       </div>
     </div>
   </footer>
+  
+
+  <section class="stickynav d-block d-lg-none bg-light">
+
+    <div class="container-fluid">
+      <div class="row">
+      
+        <router-link to="/" class="col-4 d-flex align-items-center justify-content-center p-2 text-dark text-decoration-none">
+          <i class="fa-solid fa-house-crack fa-2xl"></i>
+        </router-link>
+        <router-link to="/sets" class="col-4 d-flex justify-content-center align-items-center p-2 text-dark text-decoration-none">
+          <i class="fa-solid fa-vault fa-2xl"></i>
+        </router-link>
+        <button class="col-4 d-flex align-items-center justify-content-center p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+          <i class="fa-solid fa-gear fa-2xl fa-spin"></i>
+        </button>
+        
+      </div>
+    </div>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" data-bs-theme="dark">
+      <div class="offcanvas-body">
+        <h4>EHI HAI APERTO LE IMPOSTAZIONI <span class="d-block mt-2 glow">STAI GASANDO!</span></h4>
+        <h6 class="mt-5">NON CI SONO IMPOSTAZIONI AHAHAHAHAH</h6>
+      </div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">SETTINGS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+    </div>
+
+  </section>
 </template>
 
 
 <style lang="scss" scoped>
+
+.stickynav{
+
+  .row{
+    height: 60px;
+    
+  }
+
+
+  height: 60px !important;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  button{
+    background-color: transparent;
+    border: 0;
+    color: #171a1d;
+  }
+
+
+  .offcanvas-body{
+
+    .glow {
+      color: #fff; /* Colore del testo */
+      text-shadow: -1px 0px 5px #fff, 
+      -4px 1px 10px #fff, 
+      -8px -3px 15px #fff, 
+      0 0 20px #ff00ff, 
+      -2px -1px 30px #ff00ff, 
+      0 0 40px #ff00ff, 
+      0 0 55px #ff00ff, 
+      -3px -20px 75px #ff00ff;
+    }
+
+  }
+}
 
 footer{
 

@@ -101,7 +101,7 @@ export default {
     <div v-else class="loading-container">
       <img src="https://assets.pokemon.com/static2/_ui/img/chrome/loaders/pokeball_gray.png" class="rotating-image" />
     </div>
-    <div class="pagination-container mt-4 pb-4" v-if="totalPages > 1">
+    <div class="pagination-container-bottom mt-4 pb-4" v-if="totalPages > 1">
       <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{'active': currentPage === page}">
         {{ page }}
       </button>
@@ -119,6 +119,7 @@ export default {
   color: white;
   text-align: center;
   padding-top: 20px;
+  
 }
 
 .toggle-wrapper {
@@ -195,6 +196,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+
 }
 
 .set-card {
@@ -249,6 +251,28 @@ export default {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.pagination-container-bottom{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  button {
+    margin: 5px 5px;
+    padding: 5px 10px;
+    background-color: #2b3136;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    &.active {
+      background-color: #f39c12;
+    }
+    &:hover {
+      background-color: #f39c12;
+    }
   }
 }
 

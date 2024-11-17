@@ -146,7 +146,7 @@ export default {
         <img v-else :src="randomPokemon.images.large" :style="{ filter: `blur(${blurAmount}px)` }" :class="['blurred-image mt-4', errorClass, successClass]" />
       </div>
       <div class="col-lg-4 col-12 d-flex flex-column justify-content-center">
-        <input v-model="guess" placeholder="Nome della carta" @keyup.enter="checkGuess" class="guess-input mt-5 mt-lg-0" :disabled="isLoading" />
+        <input v-model="guess" @keyup.enter="checkGuess" placeholder="Nome della carta" class="guess-input mt-5 mt-lg-0" :disabled="isLoading" />
         <button class="btn-blue" @click="checkGuess" :disabled="isLoading">Verifica</button>
 
         <div class="message-container mt-3 fs-5">
@@ -275,7 +275,9 @@ input.guess-input {
 
 .progress-bar {
   height: 100%;
+  transition: width 0.5s ease-in-out;
 }
+
 
 .attempts-left-message {
   font-size: 1.1em;
